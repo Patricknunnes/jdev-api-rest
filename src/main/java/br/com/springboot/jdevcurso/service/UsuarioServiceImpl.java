@@ -6,7 +6,6 @@ import br.com.springboot.jdevcurso.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,29 +16,19 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     @Override
-    public List<UsuarioDto> getAll(String nome) {
-        List<UsuarioDto> usuariosDto = new ArrayList<>();
+    public List<Usuario> getAll(String nome) {
+        List<Usuario> usuarios;
         if (nome == null) {
-            List<Usuario> usuarios = usuarioRepository.findAll();
-            usuarios.forEach(usuario -> {
-                usuariosDto.add(new UsuarioDto(usuario.getNome(), usuario.getIdade()));
-            });
+            usuarios = usuarioRepository.findAll();
         } else {
-            List<Usuario> usuarios = usuarioRepository.findByNomeContaining(nome);
-            usuarios.forEach(usuario -> {
-                usuariosDto.add(new UsuarioDto(usuario.getNome(), usuario.getIdade()));
-            });
+            usuarios = usuarioRepository.findByNomeContaining(nome);
         }
-        return usuariosDto;
+        return usuarios;
     }
 
     @Override
-    public UsuarioDto getById(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
-        return UsuarioDto.builder()
-                .nome(usuario.getNome())
-                .idade(usuario.getIdade())
-                .build();
+    public Usuario getById(Long id) {
+        return usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -59,12 +48,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioDto update(Long id, UsuarioDto usuarioDto) {
+    public Usuario update(Long id, UsuarioDto usuarioDto) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
         usuario.setNome(usuarioDto.getNome());
         usuario.setIdade(usuarioDto.getIdade());
         usuarioRepository.save(usuario);
 
-        return usuarioDto;
+        return usuario;
     }
 }

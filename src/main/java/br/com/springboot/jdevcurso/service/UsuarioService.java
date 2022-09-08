@@ -1,18 +1,19 @@
 package br.com.springboot.jdevcurso.service;
 
 import br.com.springboot.jdevcurso.dto.UsuarioDto;
+import br.com.springboot.jdevcurso.model.Usuario;
 
 import java.util.List;
 
 public interface UsuarioService {
 
-    List<UsuarioDto> getAll(String nome);
+    List<Usuario> getAll(String nome);
 
-    UsuarioDto getById(Long id);
+    Usuario getById(Long id);
 
     UsuarioDto save(UsuarioDto usuarioDto);
 
     void delete(Long id);
 
-    UsuarioDto update(Long id, UsuarioDto usuarioDto);
+    Usuario update(Long id, UsuarioDto usuarioDto);
 }

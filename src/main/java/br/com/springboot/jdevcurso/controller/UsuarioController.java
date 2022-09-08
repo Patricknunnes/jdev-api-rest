@@ -1,6 +1,7 @@
 package br.com.springboot.jdevcurso.controller;
 
 import br.com.springboot.jdevcurso.dto.UsuarioDto;
+import br.com.springboot.jdevcurso.model.Usuario;
 import br.com.springboot.jdevcurso.service.UsuarioServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,12 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<UsuarioDto> getAll(@RequestParam(required = false) String nome) {
-        List<UsuarioDto> response = usuarioServiceImpl.getAll(nome);
-        return response;
+    public List<Usuario> getAll(@RequestParam(required = false) String nome) {
+        return usuarioServiceImpl.getAll(nome);
     }
 
     @GetMapping("/{id}")
-    public UsuarioDto getById(@PathVariable Long id) {
+    public Usuario getById(@PathVariable Long id) {
         return usuarioServiceImpl.getById(id);
     }
 
@@ -37,7 +37,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public UsuarioDto update(@PathVariable Long id, @RequestBody UsuarioDto usuarioDto) {
+    public Usuario update(@PathVariable Long id, @RequestBody UsuarioDto usuarioDto) {
         return usuarioServiceImpl.update(id, usuarioDto);
     }
 
