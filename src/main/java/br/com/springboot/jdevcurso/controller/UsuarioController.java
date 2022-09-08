@@ -21,8 +21,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<UsuarioDto> getAll() {
-        List<UsuarioDto> response = usuarioServiceImpl.getAll();
+    public List<UsuarioDto> getAll(@RequestParam(required = false) String nome) {
+        List<UsuarioDto> response = usuarioServiceImpl.getAll(nome);
         return response;
     }
 

@@ -5,25 +5,31 @@ import br.com.springboot.jdevcurso.model.Usuario;
 import br.com.springboot.jdevcurso.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
     @Override
-    public List<UsuarioDto> getAll() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
+    public List<UsuarioDto> getAll(String nome) {
         List<UsuarioDto> usuariosDto = new ArrayList<>();
-        usuarios.forEach(usuario -> {
-            usuariosDto.add(new UsuarioDto(usuario.getNome(), usuario.getIdade()));
-        });
+        if (nome == null) {
+            List<Usuario> usuarios = usuarioRepository.findAll();
+            usuarios.forEach(usuario -> {
+                usuariosDto.add(new UsuarioDto(usuario.getNome(), usuario.getIdade()));
+            });
+        } else {
+            List<Usuario> usuarios = usuarioRepository.findByNomeContaining(nome);
+            usuarios.forEach(usuario -> {
+                usuariosDto.add(new UsuarioDto(usuario.getNome(), usuario.getIdade()));
+            });
+        }
         return usuariosDto;
     }
 
